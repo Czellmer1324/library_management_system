@@ -11,6 +11,7 @@ class MemberCheckOutTest {
     fun checkOutNoBooksReturn() {
         val book = Book("Random", "Me")
         assertEquals(true, member.checkOutBook(book))
+        assertEquals(listOf<Book?>(book, null, null), member.viewBooks())
     }
 
     @Test

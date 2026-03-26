@@ -19,6 +19,7 @@ class Member(val name: String, val userName: String){
                 amtBooksCheckedOut++
                 checkedOut = true
                 break
+                println(books[i])
             }
         }
 
@@ -27,5 +28,18 @@ class Member(val name: String, val userName: String){
 
     fun viewBooks() : List<Book?> {
         return books.toList()
+    }
+
+    fun returnBook(title: String) : Book? {
+        for (i in 0..2) {
+            val book = books[i]
+            if (book != null && book.title == title) {
+                books[i] = null
+                book.status = BookState.IN_STOCK
+                return book
+            }
+        }
+
+        return null
     }
 }
