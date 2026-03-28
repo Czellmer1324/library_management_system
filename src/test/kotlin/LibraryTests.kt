@@ -23,6 +23,16 @@ class LibraryTests {
         assertEquals(listOf(book), bookFound)
     }
 
+    @Test fun removeBook() {
+        val book = library.addBook("Random", "Me")
+        assertEquals(listOf(book), library.getAvailableBooks())
+
+        assertEquals("This book does not exist", library.removeBook("Rand", "Me"))
+        assertEquals("Random by Me was removed!", library.removeBook("Random", "Me"))
+        assertEquals(listOf<Book>(), library.getAvailableBooks())
+        assertEquals(listOf(book), library.getRemovedBooks())
+    }
+
     @Test
     fun getBookByAuthor() {
         val book = library.addBook("Random", "Cody")
@@ -66,8 +76,6 @@ class LibraryTests {
         assertEquals("This member already has 3 books checked out.", library.checkOutBook("czellmer12", book3.title, book3.author))
         assertEquals(3, member.amtBooksCheckedOut)
         assertEquals(listOf(book, book1, book2), library.viewCheckedOutBooks())
-
-
     }
 
 

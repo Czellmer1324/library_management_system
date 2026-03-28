@@ -32,6 +32,10 @@ class Library {
         return "$title by $author was removed!"
     }
 
+    fun getRemovedBooks() : List<Book> {
+        return removedBooks.toList()
+    }
+
     private fun findBook(title: String, author: String) : Book? {
         val book = books.find {
             it.author == author && it.title == title
