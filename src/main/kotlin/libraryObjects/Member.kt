@@ -29,16 +29,15 @@ class Member(val name: String, val userName: String){
         return books.toList()
     }
 
-    fun returnBook(title: String) : Book? {
+    fun returnBook(returnBook: Book) {
         for (i in 0..2) {
             val book = books[i]
-            if (book != null && book.title == title) {
+            if (book != null && book == returnBook) {
                 books[i] = null
                 book.status = BookState.IN_STOCK
-                return book
+                amtBooksCheckedOut--
+                break
             }
         }
-
-        return null
     }
 }

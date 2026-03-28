@@ -78,5 +78,31 @@ class LibraryTests {
         assertEquals(listOf(book, book1, book2), library.viewCheckedOutBooks())
     }
 
+    @Test
+    fun returnBook() {
+        library.addMember("Cody", "czellmer12")
+        val book = library.addBook("Random", "Me")
+        val book1 = library.addBook("Random 1", "Me")
+        val book2 = library.addBook("Random 2", "Me")
+        library.checkOutBook("czellmer12", "Random", "Me")
+
+        val member = library.viewMembers()[0]
+        assertEquals("This book does not exist", library.returnBook("czellmer12", "something", "Me"))
+        assertEquals("This book was never checked out", library.returnBook("czellmer12", book2.title, book2.author))
+        assertEquals("This member does not exist", library.returnBook("czellm", book.title, book.author))
+        library.addMember("Jenna", "jenna1")
+        library.checkOutBook("jenna1", book1.title, book1.author)
+        assertEquals("This book is not checked out to this member", library.returnBook("czellmer12", book1.title, book1.author))
+
+        assertEquals("Random by Me was returned!", library.returnBook("czellmer12", book.title, book.author))
+        assertEquals(0, member.amtBooksCheckedOut)
+
+        // Return a book that was removed while it was checked out
+        library.removeBook(book1.title, book1.author)
+        assertEquals(listOf(), library.getRemovedBooks())
+        library.returnBook("jenna1", book1.title, book1.author)
+        assertEquals(listOf(book1), library.getRemovedBooks())
+    }
+
 
 }

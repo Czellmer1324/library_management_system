@@ -12,7 +12,8 @@ class MemberBookReturn {
         val book = Book("random", "me")
         member.checkOutBook(book)
 
-        assertEquals(book, member.returnBook("random"))
+        member.returnBook(book)
+        assertEquals(listOf<Book?>(null, null, null), member.viewBooks())
     }
 
     @Test
@@ -20,7 +21,7 @@ class MemberBookReturn {
         val member = Member("Cody", "cody12")
         val book = Book("random", "me")
         member.checkOutBook(book)
-        member.returnBook(book.title)
+        member.returnBook(book)
 
         val equalList = listOf<Book?>(null, null, null)
 

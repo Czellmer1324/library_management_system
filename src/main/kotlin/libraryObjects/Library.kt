@@ -26,8 +26,10 @@ class Library {
         val book = findBook(title, author) ?: return "This book does not exist"
         book.removed = true
 
-        books.remove(book)
-        removedBooks.add(book)
+        if (book.status != BookState.CHECKED_OUT) {
+            books.remove(book)
+            removedBooks.add(book)
+        }
 
         return "$title by $author was removed!"
     }
@@ -82,6 +84,25 @@ class Library {
         member.checkOutBook(book)
 
         return "Book checked out successfully"
+    }
+
+    fun returnBook(memberUserName: String, bookTitle: String, bookAuthor: String) : String {
+        val book = findBook(bookTitle, bookAuthor) ?: return "This book does not exist"
+
+        if (book.status == BookState.IN_STOCK) return "This book was never checked out"
+
+        val member = members.find { it.userName == memberUserName } ?: return "This member does not exist"
+
+        if (!member.viewBooks().contains(book)) return "This book is not checked out to this member"
+
+        member.returnBook(book)
+
+        if (book.removed) {
+            books.remove(book)
+            removedBooks.add(book)
+        }
+
+        return "${book.title} by ${book.author} was returned!"
     }
 
 
