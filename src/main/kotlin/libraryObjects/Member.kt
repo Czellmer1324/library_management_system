@@ -19,7 +19,6 @@ class Member(val name: String, val userName: String){
                 amtBooksCheckedOut++
                 checkedOut = true
                 break
-                println(books[i])
             }
         }
 
