@@ -45,11 +45,14 @@ class LibraryTests {
 
     @Test
     fun addMember() {
-        library.addMember("Cody", "czellmer12")
+        val output = library.addMember("Cody", "czellmer12")
 
         val members = library.viewMembers()
         assertEquals("Cody", members[0].name)
         assertEquals("czellmer12", members[0].userName)
+        assertEquals("Member was added.", output)
+
+        assertEquals("A member already exists with this user name", library.addMember("Cody", "czellmer12"))
     }
 
     @Test

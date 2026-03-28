@@ -8,12 +8,19 @@ class Library {
     private val members = ArrayList<Member>()
     private val removedBooks = ArrayList<Book>()
 
-    fun addMember(name: String, userName: String) {
+    fun addMember(name: String, userName: String) : String {
+        if (members.any { it.userName == userName }) return "A member already exists with this user name"
         members.add(Member(name, userName))
+
+        return "Member was added."
     }
 
     fun viewMembers() : List<Member> {
         return members.toList()
+    }
+
+    fun viewMemberCheckedOutBooks(userName: String) {
+
     }
 
     fun addBook(title: String, author: String) : Book {
