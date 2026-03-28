@@ -19,8 +19,10 @@ class Library {
         return members.toList()
     }
 
-    fun viewMemberCheckedOutBooks(userName: String) {
+    fun viewMemberCheckedOutBooks(userName: String) : List<Book?> {
+        val member = members.find { it.userName == userName } ?: return listOf()
 
+        return member.viewBooks()
     }
 
     fun addBook(title: String, author: String) : Book {

@@ -107,5 +107,18 @@ class LibraryTests {
         assertEquals(listOf(book1), library.getRemovedBooks())
     }
 
+    @Test
+    fun viewMemberBooks() {
+        library.addMember("Cody", "czellmer12")
+        val book = library.addBook("Random", "Me")
+        val book1 = library.addBook("Random 1", "Me")
+        val book2 = library.addBook("Random 2", "Me")
+        library.checkOutBook("czellmer12", book.title, book.author)
+        library.checkOutBook("czellmer12", book1.title, book1.author)
+        library.checkOutBook("czellmer12", book2.title, book2.author)
+
+        assertEquals(listOf(book, book1, book2), library.viewMemberCheckedOutBooks("czellmer12"))
+        assertEquals(listOf(), library.viewMemberCheckedOutBooks("jenna1"))
+    }
 
 }
