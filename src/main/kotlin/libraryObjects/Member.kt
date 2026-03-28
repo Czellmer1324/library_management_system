@@ -5,7 +5,7 @@ import com.czellmer1324.libraryObjects.book.BookState
 
 class Member(val name: String, val userName: String){
     private val books : Array<Book?> = Array(3) { null }
-    private var amtBooksCheckedOut = 0
+    var amtBooksCheckedOut = 0
 
     fun checkOutBook(book: Book) : Boolean {
         var checkedOut = false

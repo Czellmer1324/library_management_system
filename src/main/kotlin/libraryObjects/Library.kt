@@ -12,6 +12,10 @@ class Library {
         members.add(Member(name, userName))
     }
 
+    fun viewMembers() : List<Member> {
+        return members.toList()
+    }
+
     fun addBook(title: String, author: String) : Book {
         val book = Book(title, author)
         books.add(book)
@@ -20,6 +24,7 @@ class Library {
 
     fun removeBook(title: String, author: String) : String {
         val book = findBook(title, author) ?: return "This book does not exist"
+        book.removed = true
 
         books.remove(book)
         removedBooks.add(book)
@@ -28,11 +33,11 @@ class Library {
     }
 
     private fun findBook(title: String, author: String) : Book? {
-        val bookToRemove = books.find {
+        val book = books.find {
             it.author == author && it.title == title
         }
 
-        return bookToRemove
+        return book
     }
 
     fun findBookByTitle(title: String) : List<Book> {
@@ -51,6 +56,28 @@ class Library {
         return books.filter {
             it.status == BookState.IN_STOCK
         }
+    }
+
+    fun viewCheckedOutBooks() : List<Book> {
+        return books.filter {
+            it.status == BookState.CHECKED_OUT
+        }
+    }
+
+    fun checkOutBook(memberUserName: String, bookTitle: String, bookAuthor: String) : String {
+        val member = members.find { it.userName == memberUserName }
+
+        if (member == null) return "Member not found"
+
+        if (member.amtBooksCheckedOut == 3) return "This member already has 3 books checked out."
+
+        val book = findBook(bookTitle, bookAuthor) ?: return "This book does not exist in the system"
+
+        if (book.status == BookState.CHECKED_OUT) return "This book is listed as checked out. Please return it in the system first"
+
+        member.checkOutBook(book)
+
+        return "Book checked out successfully"
     }
 
 
