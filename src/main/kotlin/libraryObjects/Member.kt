@@ -2,8 +2,9 @@ package com.czellmer1324.libraryObjects
 
 import com.czellmer1324.libraryObjects.book.Book
 import com.czellmer1324.libraryObjects.book.BookState
+import java.io.Serializable
 
-class Member(val name: String, val userName: String){
+class Member(val name: String, val userName: String) : Serializable {
     private val books : Array<Book?> = Array(3) { null }
     var amtBooksCheckedOut = 0
 

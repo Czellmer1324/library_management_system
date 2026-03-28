@@ -1,6 +1,8 @@
 package com.czellmer1324.libraryObjects.book
 
-enum class BookState {
+import java.io.Serializable
+
+enum class BookState : Serializable{
     CHECKED_OUT,
     IN_STOCK
 }

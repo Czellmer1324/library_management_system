@@ -2,11 +2,41 @@ package com.czellmer1324.libraryObjects
 
 import com.czellmer1324.libraryObjects.book.Book
 import com.czellmer1324.libraryObjects.book.BookState
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
+import java.io.Serializable
 
-class Library {
-    private val books = ArrayList<Book>()
-    private val members = ArrayList<Member>()
-    private val removedBooks = ArrayList<Book>()
+class Library : Serializable{
+    private var books = ArrayList<Book>()
+    private var members = ArrayList<Member>()
+    private var removedBooks = ArrayList<Book>()
+
+    init {
+        val file = File("data.ser")
+        if (!file.exists()) {
+            file.createNewFile()
+        }
+
+        if (file.length() != 0L) {
+            val dataIn = ObjectInputStream(FileInputStream("data.ser"))
+            dataIn.use { ois ->
+                val savedLib: Library = ois.readObject() as Library
+                this.books = savedLib.books
+                this.members = savedLib.members
+                this.removedBooks = savedLib.removedBooks
+            }
+        }
+    }
+
+    fun save() {
+        val dataOut = ObjectOutputStream(FileOutputStream("data.ser"))
+        dataOut.use { oos ->
+            oos.writeObject(this)
+        }
+    }
 
     fun addMember(name: String, userName: String) : String {
         if (members.any { it.userName == userName }) return "A member already exists with this user name"
